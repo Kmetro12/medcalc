@@ -5,16 +5,10 @@ Created on Jun 29, 2021
 '''
 import kivy #importing kivy and various tools needed 
 from kivymd.app import App
-from kivy.uix.label import Label
-from kivymd.uix.label import MDLabel 
-from kivy.uix.popup import Popup #for popup window
-from kivy.uix.floatlayout import FloatLayout #for popup window 
-from kivy.uix.widget import Widget
-from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label 
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.button import Button
-from kivy.uix.scrollview import ScrollView
-from kivy.clock import Clock 
+
 
 '''
 class widget(Widget): #A class to inherit widgets 
@@ -104,4 +98,3 @@ class medCalc(App): #building the application
 
 if __name__ == "__main__": #running the application 
     medCalc().run()
-    
