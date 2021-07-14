@@ -4,10 +4,13 @@ Created on Jun 29, 2021
 @author: Silvermoon
 '''
 import kivy #importing kivy and various tools needed 
-from kivymd.app import App
+from kivy.app import App
 from kivy.uix.label import Label 
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.button import Button
+from kivy.graphics import * 
+from matplotlib.backend_bases import button_press_handler
+from kivy.uix.textinput import TextInput
 
 
 '''
@@ -73,21 +76,124 @@ class medCalcNight(RelativeLayout):#the medcalc nightmode class
         #-----Functions for Disclaimer-----
         def pressYes(self):
             layoutHome.clear_widgets()#clears all widgets from the frame 
-            createHomePage() 
+            createHomePage(self) 
             #disclaimerWindow.dismiss()#closing the popup window  
             pass
         def pressNo(self):
             medCalc().stop() #exiting the program 
+            
+        #-----Misc Functions---------------
+        def clearScreen():
+            layoutHome.clear_widgets() 
+            
         #---------------------------------- 
         #Creating the Homepage 
-        #---------------------------------- 
-        
-        def createHomePage():
-            lblHomePageTest = Label(text="TesthingLabel")
+        #----------------------------------         
+        def createHomePage(self):
+            lblHomePageTest = Label(text="Please Select Problem Type: ",size_hint=(0.3,0.1), pos_hint={'x':0.32, 'y':0.7})
             layoutHome.add_widget(lblHomePageTest)
-        #adding actions to the buttons 
+            
+            #adding buttons to problem types 
+            btnSupply = Button(text="Supply per 1mL",size_hint=(0.3,0.1), pos_hint={'x':0.32, 'y':0.6})
+            btnSupply.bind(on_press=Supply)#binding the button to a function 
+            layoutHome.add_widget(btnSupply)
+            
+            btnIvp = Button(text="IV Push",size_hint=(0.3,0.1), pos_hint={'x':0.32, 'y':0.5})
+            btnIvp.bind(on_press=IvPush)
+            layoutHome.add_widget(btnIvp)
+            
+            btnIvd = Button(text="IV Drip Problem",size_hint=(0.3,0.1), pos_hint={'x':0.32, 'y':0.4} )
+            btnIvd.bind(on_press=IvDrip)
+            layoutHome.add_widget(btnIvd)
+            
+            btnDopa = Button(text="Dopamine Problem",size_hint=(0.3,0.1), pos_hint={'x':0.32, 'y':0.3})
+            btnDopa.bind(on_press=Dopamine)
+            layoutHome.add_widget(btnDopa)
+            
+            btnConvert = Button(text="Conversion",size_hint=(0.3,0.1), pos_hint={'x':0.32, 'y':0.2})
+            btnConvert.bind(on_press=Conversion)
+            layoutHome.add_widget(btnConvert)
+            
+            btnSettings = Button(text="Settings",size_hint=(0.3,0.1),pos_hint={'x':0.32, 'y':0.1})
+            btnSettings.bind(on_press=Settings)
+            layoutHome.add_widget(btnSettings)
+        #---------------------------------- 
+        #End Create Homepage  
+        #----------------------------------
+        #---------------------------------- 
+        #Start Supply Fx
+        #----------------------------------
+        def Supply(self):
+            
+            clearScreen() #clearing the screen to place supply problem, and title label   
+            result = str("") #creating a string variable so result can then be placed in text box 
+            
+            lblSupply = Label(text="Find supply per 1mL",size_hint=(0.3,0.1), pos_hint={'x':0.32, 'y':0.7})
+            layoutHome.add_widget(lblSupply)
+            
+            #creating buttons for supply 
+            lblMgs = Label(text="Enter milligrams (Mgs): ",size_hint=(0.3,0.1), pos_hint={'x':0.15, 'y':0.6})
+            layoutHome.add_widget(lblMgs)
+            txtMgs = TextInput(size_hint=(0.3,0.1), pos_hint={'x':0.42, 'y':0.6}, multiline=False)
+            layoutHome.add_widget(txtMgs)
+            
+            lblMls = Label(text="Enter milliliters (Mls): ",size_hint=(0.3,0.1), pos_hint={'x':0.15, 'y':0.5})
+            layoutHome.add_widget(lblMls)
+            txtMls = TextInput(size_hint=(0.3,0.1), pos_hint={'x':0.42, 'y':0.5}, multiline=False)
+            layoutHome.add_widget(txtMls)
+            
+            lblMgspMl = Label(text="Milligrams per 1 mL: ",size_hint=(0.3,0.1), pos_hint={'x':0.15, 'y':0.4})
+            layoutHome.add_widget(lblMgspMl)
+            
+            txtAnswerSupp = TextInput(size_hint=(0.3,0.1), pos_hint={'x':0.42, 'y':0.4}, multiline=False, disabled=True) #disabled sets text input to read only 
+            layoutHome.add_widget(txtAnswerSupp)
+            
+            #adding buttons to return to homescreen and calculate problem 
+            def returnHome(self):
+                clearScreen()
+                createHomePage(self)
+                
+            def supplyCalc(self):
+                
+                try: #try catch loop for user errors 
+                    MgsNum = float(txtMgs.text)#Converting TextInput to Float 
+                    MlsNum = float(txtMls.text)
+                    
+                    answer = round(MgsNum/MlsNum,5) #rounding the answer to 5 decimal places
+                    txtAnswerSupp.text = str(answer)#converting the answer back to a string and placing into text input box 
+                except:
+                    answer = "ERROR" #if exception is thrown then give error for answer 
+                    txtAnswerSupp.text = answer
+             
+            btnReturnHome = Button(text="Return to Homescreen",size_hint=(0.3,0.1), pos_hint={'x':0.15, 'y':0.3})
+            btnReturnHome.bind(on_press=returnHome)
+            layoutHome.add_widget(btnReturnHome)
+            
+            btnCalculate = Button(text="Calculate",size_hint=(0.3,0.1), pos_hint={'x':0.45, 'y':0.3})
+            btnCalculate.bind(on_press=supplyCalc)
+            layoutHome.add_widget(btnCalculate)
+            
+        #---------------------------------- 
+        #End Supply Fx  
+        #----------------------------------
+        
+        def IvPush(self):
+            pass
+        def IvDrip(self):
+            pass
+        def Dopamine(self):
+            pass
+        def Conversion(self):
+            pass
+        def Settings(self):
+            pass
+
+        
+        #adding actions to the buttons for disclaimer 
         btnYes.bind(on_press=pressYes)
         btnNo.bind(on_press=pressNo)
+        
+ 
         
         self.add_widget(layoutHome)#adding the innerlayout to the root 
         
@@ -98,3 +204,4 @@ class medCalc(App): #building the application
 
 if __name__ == "__main__": #running the application 
     medCalc().run()
+    
