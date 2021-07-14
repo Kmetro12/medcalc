@@ -9,7 +9,6 @@ from kivy.uix.label import Label
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.button import Button
 from kivy.graphics import * 
-from matplotlib.backend_bases import button_press_handler
 from kivy.uix.textinput import TextInput
 
 
