@@ -15,8 +15,8 @@ from kivy.core.window import Window #setting the window size in kivy
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.dropdown import DropDown
 
-Window.clearcolor =(0,0,0,0)#setting the color of the window
-Window.size=(360,600) # setting the window size 
+#Window.clearcolor =(0,0,0,0)#setting the color of the window
+#Window.size=(360,600) # setting the window size 
 '''
 class widget(Widget): #A class to inherit widgets 
     pass
